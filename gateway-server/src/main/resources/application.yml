@@ -1,0 +1,20 @@
+server:
+  port: 8079
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: customer-route
+            uri: ${CUSTOMER_ROUTE_URI:http://localhost:8081}
+            predicates:
+              - Path=/customer-hello/**
+            filters:
+              - PrefixPath=/api/v1
+          - id: products-route
+            uri: ${PRODUCTS_ROUTE_URI:http://localhost:8082}
+            predicates:
+              - Path=/products-hello/**
+            filters:
+              - PrefixPath=/api/v1
